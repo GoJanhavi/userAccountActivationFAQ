@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,7 +25,9 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        //
+        $profile = new Profile();
+        $edit = FALSE;
+        return view('pages.breadOperation.profileForm', ['profile'=>$profile,'edit'=>$edit]);
     }
 
     /**
@@ -35,7 +38,23 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->validate([
+            'first_name'=>'required',
+            'last_name'=>'required',
+            'body'=>'required'
+        ],[
+            'first_name.required' => 'First Name cannot be blank',
+            'last_name.required' => 'Last Name cannot be blank',
+            'body.required' => 'About section cannot be blank',
+        ]);
+
+        $input = $request->all();
+        $profile = new Profile($input);
+        $profile->user()->associate(Auth::user());
+        $profile->save();
+
+        return redirect()->route('home')->with('message','Profile created successfully !! ');
+
     }
 
     /**

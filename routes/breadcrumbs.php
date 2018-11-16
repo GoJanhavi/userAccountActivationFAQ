@@ -10,6 +10,16 @@ Breadcrumbs::for('profile.show', function ($trail, $user_id,$profile_id ) {
     $trail->push('Profile', route('profile.show', ['user_id'=>$user_id, 'profile_id'=>$profile_id]));
 });
 
+Breadcrumbs::for('profile.create', function ($trail, $user_id ) {
+    $trail->parent('home');
+    $trail->push('Create Profile', route('profile.create', ['user_id'=>$user_id]));
+});
+
+
+
+
+
+
 // Question
 Breadcrumbs::for('question.show', function ($trail, $question) {
     $trail->parent('home');
