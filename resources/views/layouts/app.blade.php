@@ -92,9 +92,11 @@
         </nav>
 
         <main class="py-4">
-            <div class="container">
-                {{ Breadcrumbs::render() }}
-            </div>
+            @if (Auth::user())
+                <div class="container">
+                    {{ Breadcrumbs::render() }}
+                </div>
+            @endif
             @yield('content')
         </main>
     </div>
