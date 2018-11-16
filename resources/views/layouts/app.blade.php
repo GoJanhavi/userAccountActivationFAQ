@@ -92,6 +92,9 @@
         </nav>
 
         <main class="py-4">
+            <div class="container">
+                {{ Breadcrumbs::render() }}
+            </div>
             @yield('content')
         </main>
     </div>
