@@ -12,10 +12,12 @@ class QuestionTableSeeder extends Seeder
     public function run()
     {
         $user = App\User::all();
-        $user->each(function($user){
-            $question=factory(\App\Question::class)->make();
-            $question->user()->associate($user);
-            $question->save();
-        });
+        for($q=1; $q<=16; $q++) {
+            $user->each(function ($user) {
+                $question = factory(\App\Question::class)->make();
+                $question->user()->associate($user);
+                $question->save();
+            });
+        }
     }
 }
