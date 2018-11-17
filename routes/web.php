@@ -35,3 +35,4 @@ Route::get('/question/{question_id}/answer/{answer_id}', 'AnswerController@show'
 Route::get('/question/{question_id}/answer/{answer_id}/edit', 'AnswerController@edit')->name('answer.edit');
 Route::post('/question/{question_id}/answer/', 'AnswerController@store')->name('answer.store');
 Route::patch('/question/{question_id}/answer/{answer_id}', 'AnswerController@update')->name('answer.update');
+Route::delete('/question/{question_id}/answer/{answer_id}', 'AnswerController@destroy')->name('answer.destroy');

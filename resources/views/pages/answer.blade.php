@@ -13,8 +13,13 @@
 
                     <div class="card-footer">
                         <a class="btn btn-success float-right" href="{{ route('answer.edit', ['question_id' => $question, 'answer_id'=>$answer->id,]) }}">
-                            Edit Answer
+                            Edit
                         </a>
+                        {{ Form::open(['method'  => 'DELETE', 'route' => ['answer.destroy', $answer->id, $question]])}}
+                        <button class="btn btn-danger float-right mr-2">
+                            Delete
+                        </button>
+                        {{Form::close()}}
                     </div>
                 </div>
             </div>
