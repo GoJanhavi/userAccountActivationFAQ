@@ -47,8 +47,8 @@ class AnswerController extends Controller
         $input = $request->validate([
             'body'=>'required|min:5'
         ],[
-            'body.required' => 'Question text section cannot be blank',
-            'body.min' => 'Question text must contain min 5 characters',
+            'body.required' => 'Answer text section cannot be blank',
+            'body.min' => 'Answer text must contain min 5 characters',
         ]);
 
         $input = request()->all();
@@ -57,7 +57,7 @@ class AnswerController extends Controller
         $Answer->user()->associate(Auth::user());
         $Answer->question()->associate($question);
         $Answer->save();
-        return redirect()->route('question.show',['question_id' => $question->id])->with('message', 'Saved');
+        return redirect()->route('question.show',['question_id' => $question->id])->with('message', 'Question answered successfully !! ');
     }
 
 
