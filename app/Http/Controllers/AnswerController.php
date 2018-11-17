@@ -79,9 +79,11 @@ class AnswerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($question, $answer)
     {
-        //
+        $answer = Answer::find($answer); //gets answer object
+        $edit = TRUE;
+        return view('pages.breadOperation.answerForm',['answer'=> $answer,'question'=>$question,'edit'=>$edit]);
     }
 
     /**
@@ -91,10 +93,21 @@ class AnswerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $question, $answer)
     {
-        //
+        $input = $request->validate([
+            'body'=>'required|min:5'
+        ],[
+            'body.required' => 'Answer text section cannot be blank',
+            'body.min' => 'Answer text must contain min 5 characters',
+        ]);
+
+        $answer = Answer::find($answer);
+        $answer->body = $request->body;
+        $answer->save();
+        return redirect()->route('answer.show',['question_id' => $question, 'answer_id' => $answer])->with('message', 'Answer successfully updated !!');
     }
+
 
     /**
      * Remove the specified resource from storage.

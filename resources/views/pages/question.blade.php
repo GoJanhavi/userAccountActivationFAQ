@@ -31,7 +31,7 @@
 
                     <div class="card-body">
                         @forelse($question->answer as $answer)
-                            <div class="card">
+                            <div class="card mb-3">
                                 <div class="card-body">{{$answer->body}}</div>
                                 <div class="card-footer">
 

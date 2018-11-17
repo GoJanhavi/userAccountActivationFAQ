@@ -32,4 +32,6 @@ Route::resources(['question' => 'QuestionController',]);
 //Answer Routes
 Route::get('/question/{question_id}/answer/create', 'AnswerController@create')->name('answer.create');
 Route::get('/question/{question_id}/answer/{answer_id}', 'AnswerController@show')->name('answer.show');
+Route::get('/question/{question_id}/answer/{answer_id}/edit', 'AnswerController@edit')->name('answer.edit');
 Route::post('/question/{question_id}/answer/', 'AnswerController@store')->name('answer.store');
+Route::patch('/question/{question_id}/answer/{answer_id}', 'AnswerController@update')->name('answer.update');
