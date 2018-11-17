@@ -92,11 +92,8 @@
         </nav>
 
         <main class="py-4">
-            @if (Auth::user())
-                <div class="container">
-                    {{ Breadcrumbs::render() }}
-                </div>
-            @endif
+            @include('pages.subHeader.breadcrumb')
+            @include('pages.subHeader.message')
             @yield('content')
         </main>
     </div>
