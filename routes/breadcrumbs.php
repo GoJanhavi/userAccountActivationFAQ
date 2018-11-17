@@ -45,8 +45,11 @@ Breadcrumbs::for('question.edit', function ($trail,$question) {
 // Answer
 Breadcrumbs::for('answer.show', function ($trail,$question, $answer_id ) {
     $trail->parent('question.show',$question);
-
     $trail->push('Answer', route('answer.show', ['question_id'=> $question, 'answer_id'=>$answer_id]));
+});
 
+Breadcrumbs::for('answer.create', function ($trail,$question) {
+    $trail->parent('question.show',$question);
+    $trail->push('Add Answer', route('answer.create', ['question'=> $question]));
 });
 
