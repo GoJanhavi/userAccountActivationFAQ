@@ -31,7 +31,9 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        $question = new Question();
+        $edit = FALSE;
+        return view('pages.breadOperation.questionForm', ['question'=>$question,'edit'=>$edit]);
     }
 
     /**
@@ -42,7 +44,21 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->validate([
+            'body'=>'required|min:5'
+        ],[
+            'body.required' => 'Question text section cannot be blank',
+            'body.min' => 'Question text must contain min 5 characters',
+        ]);
+
+        $input = $request->all();
+
+        $question = new Question($input);
+        $question->user()->associate(Auth::user());
+        $question->save();
+
+        return redirect()->route('home')->with('message','Question posted successfully !! ');
+
     }
 
     /**

@@ -22,14 +22,19 @@ Breadcrumbs::for('profile.edit', function ($trail, $user_id ,$profile_id) {
 
 
 
-
-
-
 // Question
 Breadcrumbs::for('question.show', function ($trail, $question) {
     $trail->parent('home');
     $trail->push('Question', route('question.show',['question'=>$question]));
 });
+
+Breadcrumbs::for('question.create', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Add Question', route('question.create'));
+});
+
+
+
 
 
 // Answer
