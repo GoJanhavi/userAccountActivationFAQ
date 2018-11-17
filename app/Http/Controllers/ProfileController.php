@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Profile;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -76,9 +77,13 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($user, $profile)
     {
-        //
+        $user = User::find($user);
+        $profile = $user->profile;
+        $edit = TRUE;
+
+        return view('pages.breadOperation.profileForm',['profile'=>$profile,'edit'=>$edit]);
     }
 
     /**
@@ -88,9 +93,28 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $user, $profile)
     {
-        //
+        $input = $request->validate([
+            'first_name'=>'required',
+            'last_name'=>'required',
+            'body'=>'required'
+        ],[
+            'first_name.required' => 'First Name cannot be blank',
+            'last_name.required' => 'Last Name cannot be blank',
+            'body.required' => 'About section cannot be blank',
+        ]);
+
+       // $input = $request->all();
+        $profile = Profile::find($profile);
+
+        $profile->first_name = $request->first_name;
+        $profile->last_name = $request->last_name;
+        $profile->body = $request->body;
+
+        $profile->save();
+
+        return redirect()->route('home')->with('message','Profile updated successfully !! ');
     }
 
     /**
