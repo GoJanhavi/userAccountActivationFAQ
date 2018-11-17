@@ -15,6 +15,11 @@
                         <a class="btn btn-success float-right" href="{{ route('question.edit', ['question_id' => $question->id]) }}">
                             Edit Question
                         </a>
+                        {{ Form::open(['method'  => 'DELETE', 'route' => ['question.destroy', $question->id]])}}
+                        <button class="btn btn-danger float-right mr-2">
+                            Delete Question
+                        </button>
+                        {{Form::close()}}
                     </div>
                 </div>
             </div>

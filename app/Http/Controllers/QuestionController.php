@@ -101,7 +101,7 @@ class QuestionController extends Controller
             'body.min' => 'Question text must contain min 5 characters',
         ]);
 
-        $input = $request->all();
+      //  $input = $request->all();
         $question->body = $request->body;
 
         $question->save();
@@ -116,8 +116,9 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Question $question)
     {
-        //
+        $question->delete();
+        return redirect()->route('home')->with('message','Question deleted successfully');
     }
 }
