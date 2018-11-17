@@ -78,9 +78,11 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Question $question)
     {
-        //
+        $edit = TRUE;
+
+        return view('pages.breadOperation.questionForm',['question'=>$question,'edit'=>$edit]);
     }
 
     /**
@@ -90,9 +92,22 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Question $question)
     {
-        //
+        $input = $request->validate([
+            'body'=>'required|min:5'
+        ],[
+            'body.required' => 'Question text section cannot be blank',
+            'body.min' => 'Question text must contain min 5 characters',
+        ]);
+
+        $input = $request->all();
+        $question->body = $request->body;
+
+        $question->save();
+
+        return redirect()->route('question.show',['question_id'=> $question])->with('message','Question updated successfully !! ');
+
     }
 
     /**
