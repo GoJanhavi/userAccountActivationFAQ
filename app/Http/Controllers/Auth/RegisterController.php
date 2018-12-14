@@ -73,4 +73,24 @@ class RegisterController extends Controller
 
         return $user;
     }
+
+    protected function userActivationViaEmail($token){
+
+        $userActivation = User::where('user_activation_token', $token)->first();;
+
+        if(isset($userActivation) ){
+            $user = $userActivation;
+            if(!$user->email_verified_at) {
+                $user->email_verified_at = date("F j, Y, g:i a");
+                $user->save();
+                $status = "Email is successfully verified. You can access your account by logging in.";
+            }else{
+                $status = " Your Email is already verified. You can access your account by logging in";
+            }
+        }else{
+            return redirect('/login')->with('error', "Unidentified account! Please activate your account using link sent to your email.");
+        }
+
+        return redirect('/login')->with('message', $status);
+    }
 }
