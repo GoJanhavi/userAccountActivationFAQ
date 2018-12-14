@@ -23,7 +23,7 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, $user)
     {
-        if (!$user->verified) {
+        if (!$user->email_verified_at) {
             auth()->logout();
             return back()->with('message', 'You need to activate your account. Please check your email to access verification link.');
         }
