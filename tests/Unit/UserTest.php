@@ -53,5 +53,20 @@ class UserTest extends TestCase
     }
 
 
+    public function testAuthenticationFailure()
+    {
+        $user = User::create([
+            'email'=> 'xyz@abc.com',
+            'password' => bcrypt($password = 'abcdef'),
+        ]);
+
+        $response = $this->from('/login')->post('/login', [
+            'email' => $user->email,
+            'password' => 'qwertyu',
+        ]);
+
+        $response->assertRedirect('/login');
+    }
+
 }
 
