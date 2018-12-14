@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use App\User;
+use PhpParser\Node\Scalar\String_;
+use Psy\Util\Str;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -66,6 +68,11 @@ class UserTest extends TestCase
         ]);
 
         $response->assertRedirect('/login');
+    }
+
+    public function testTokenFormat(){
+        $token = User::inRandomOrder()->first()->user_activation_token;
+        $this->assertInternalType('string', $token);
     }
 
 }
