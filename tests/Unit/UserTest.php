@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -34,4 +35,23 @@ class UserTest extends TestCase
         $user = factory(\App\User::class)->make();
         $this->assertTrue(is_object($user->answer()->get()));
     }
+
+
+    public function testAuthenticationSuccess()
+    {
+        $user = factory(\App\User::class)->create([
+            'email'=> 'abc@abc.com',
+            'password' => bcrypt($password = 'abcdef'),
+        ]);
+
+        $this->from('/login')->post('/login', [
+            'email' => $user->email,
+            'password' => $password,
+        ]);
+
+        $this->assertAuthenticatedAs($user);
+    }
+
+
 }
+
