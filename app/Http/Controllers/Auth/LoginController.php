@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -19,6 +20,15 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+
+    public function authenticated(Request $request, $user)
+    {
+        if (!$user->verified) {
+            auth()->logout();
+            return back()->with('message', 'You need to activate your account. Please check your email to access verification link.');
+        }
+        return redirect()->intended($this->redirectPath());
+    }
 
     /**
      * Where to redirect users after login.
