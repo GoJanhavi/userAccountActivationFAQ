@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Mail\VerifyAndActivate;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -62,9 +63,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'user_activation_token' => str_random(58),
         ]);
+
+        Mail::to($user->email)->send(new VerifyAndActivate($user));
+
+        return $user;
     }
 }
