@@ -10,15 +10,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class VerifyAndActivate extends Mailable
 {
     use Queueable, SerializesModels;
-    
+
+    public $user;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user)
     {
-        //
+        $this->user=$user;
     }
 
     /**
