@@ -17,10 +17,11 @@
                             <div class="col-sm-4 d-flex align-items-stretch">
                                 <div class="card mb-3 ">
                                     <div class="card-header">
-                                        <small class="text-muted">
-                                            Updated: {{ $question->created_at->diffForHumans() }}
+                                        <small class="text-muted float-left">
+                                            Updated: {{ $question->updated_at->diffForHumans() }}
+                                        </small>
+                                        <small class="float-right text-muted">
                                             Answers: {{ $question->answer()->count() }}
-
                                         </small>
                                     </div>
                                     <div class="card-body">
@@ -28,7 +29,7 @@
                                     </div>
                                     <div class="card-footer">
                                         <p class="card-text">
-
+                                            <small class="text-muted">Posted By: {{\App\User::find($question->user_id)->email}}</small>
                                             <a class="btn btn-primary float-right" href="{{
                                             route('question.show', ['id' => $question->id]) }}">
                                                 View

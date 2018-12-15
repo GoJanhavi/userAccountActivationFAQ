@@ -5,21 +5,28 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">Question</div>
+                    <div class="card-header">Question
+                        <small class="text-muted float-right">
+                            Updated: {{ $question->updated_at->diffForHumans() }}
+                        </small>
+                    </div>
 
                     <div class="card-body">
                         <p>{{$question->body}}</p>
                     </div>
 
                     <div class="card-footer">
-                        <a class="btn btn-success float-right" href="{{ route('question.edit', ['question_id' => $question->id]) }}">
-                            Edit
-                        </a>
-                        {{ Form::open(['method'  => 'DELETE', 'route' => ['question.destroy', $question->id]])}}
-                        <button class="btn btn-danger float-right mr-2">
-                            Delete
-                        </button>
-                        {{Form::close()}}
+                        <small class="text-muted float-left">Posted By: {{\App\User::find($question->user_id)->email}}</small>
+                        @if(Auth::user()->id ==$question->user_id)
+                            <a class="btn btn-success float-right" href="{{ route('question.edit', ['question_id' => $question->id]) }}">
+                                Edit
+                            </a>
+                            {{ Form::open(['method'  => 'DELETE', 'route' => ['question.destroy', $question->id]])}}
+                            <button class="btn btn-danger float-right mr-2">
+                                Delete
+                            </button>
+                            {{Form::close()}}
+                        @endif
                     </div>
                 </div>
             </div>
@@ -34,7 +41,9 @@
                             <div class="card mb-3">
                                 <div class="card-body">{{$answer->body}}</div>
                                 <div class="card-footer">
-
+                                    <small class="text-muted">Posted By: {{\App\User::find($answer->user_id)->email}}
+                                       &nbsp;| Updated: {{ $answer->updated_at->diffForHumans() }}
+                                    </small>
                                     <a class="btn btn-primary float-right"
                                        href="{{ route('answer.show', ['question_id'=> $question->id,'answer_id' => $answer->id]) }}">
                                         View
