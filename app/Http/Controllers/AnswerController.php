@@ -120,8 +120,9 @@ class AnswerController extends Controller
     public function destroy($answer, $question)
     {
         $answer = Answer::find($answer);
-
-        $answer->delete();
-        return redirect()->route('question.show',['question_id'=>$question])->with('message','Answer deleted successfully');
+        if ((int)($answer->user_id) == Auth::user()->id) {
+            $answer->delete();
+            return redirect()->route('question.show', ['question_id' => $question])->with('message', 'Answer deleted successfully');
+        }
     }
 }

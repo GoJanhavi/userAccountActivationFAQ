@@ -121,7 +121,9 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        $question->delete();
-        return redirect()->route('home')->with('message','Question deleted successfully');
+        if ((int)($question->user_id) == Auth::user()->id) {
+            $question->delete();
+            return redirect()->route('home')->with('message', 'Question deleted successfully');
+        }
     }
 }
