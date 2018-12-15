@@ -65,4 +65,32 @@ class QuestionTest extends DuskTestCase
         $user->delete();
     }
 
+
+    public function testDeleteQuestion(){
+        $user = factory(User::class)->make([
+            'email' => 'testDeleteQ@test.com',
+        ]);
+        $user->save();
+        $this->browse(function ($browser) use ($user) {
+            $browser->visit('/login')
+                ->type('email', $user->email)
+                ->type('password', 'secret')
+                ->press('Login')
+                ->assertPathIs('/home');
+        });
+        $this->browse(function ($browser) use ($user) {
+            $browser->visit('/home')
+                ->clickLink('Post New')
+                ->assertPathIs('/question/create')
+                ->type('body', 'Question to be deleted')
+                ->press('Post')
+                ->assertPathIs('/home')
+                ->clickLink('View')
+                ->press('Delete')
+                ->assertPathIs('/home');
+        });
+
+        $user->delete();
+    }
+
 }

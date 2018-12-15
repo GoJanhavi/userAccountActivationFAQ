@@ -1,5 +1,5 @@
 <?php
-/*
+
 namespace Tests\Browser;
 
 use App\User;
@@ -78,4 +78,4 @@ class LoginAuthenticationTest extends DuskTestCase
         $user->delete();
     }
 
-}*/
+}
