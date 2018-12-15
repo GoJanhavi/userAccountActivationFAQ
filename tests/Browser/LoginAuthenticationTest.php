@@ -59,6 +59,23 @@ class LoginAuthenticationTest extends DuskTestCase
         $user->delete();
     }
 
+    public function testLogout(){
+        $user = factory(User::class)->make([
+            'email' => 'testLogOut@test.com',
+        ]);
+        $user->save();
+        $this->browse(function ($browser) use ($user) {
+            $browser->visit('/login')
+                ->type('email', $user->email)
+                ->type('password', 'secret')
+                ->press('Login')
+                ->assertPathIs('/home')
+                ->clickLink('My Account')
+                ->clickLink('Logout')
+                ->assertPathIs('/');
+        });
 
+        $user->delete();
+    }
 
 }
