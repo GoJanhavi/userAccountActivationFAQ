@@ -93,4 +93,45 @@ class QuestionTest extends DuskTestCase
         $user->delete();
     }
 
+
+    public function testUserNotAbleToEditOrDeleteOthersQuestion(){
+        $user1 = factory(User::class)->make([
+            'email' => 'testUserOne@test.com',
+        ]);
+        $user1->save();
+        $user2 = factory(User::class)->make([
+            'email' => 'testUserTwoQ@test.com',
+        ]);
+        $user2->save();
+
+        $this->browse(function ($browser) use ($user1, $user2) {
+            $browser->visit('/login')
+                ->type('email', $user1->email)
+                ->type('password', 'secret')
+                ->press('Login')
+                ->assertPathIs('/home')
+                ->clickLink('Post New')
+                ->assertPathIs('/question/create')
+                ->type('body', 'Question created')
+                ->press('Post')
+                ->assertPathIs('/home')
+                ->clickLink('My Account')
+                ->clickLink('Logout')
+                ->assertPathIs('/')
+                ->clickLink('Login')
+                ->type('email', $user2->email)
+                ->type('password', 'secret')
+                ->press('Login')
+                ->assertPathIs('/home')
+                ->clickLink('View')
+                ->assertDontSee('Edit')
+                ->assertDontSee('Delete');
+        });
+
+        Question::where('user_id',($user1->id))->first()->delete();
+        $user1->delete();
+        $user2->delete();
+
+    }
+
 }
