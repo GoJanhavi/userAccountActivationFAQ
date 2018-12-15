@@ -9,17 +9,12 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class LoginAuthenticationTest extends DuskTestCase
 {
-    /**
-     * A Dusk test example.
-     *
-     * @return void
-     */
-    public function testExample()
+    public function testUserLogin()
     {
         $user = factory(User::class)->make([
-            'email' => 'abcdef@abc.com',
+            'email' => 'janhavi@abc.com',
         ]);
-
+        $user->save();
         $this->browse(function ($browser) use ($user) {
             $browser->visit('/login')
                 ->type('email', $user->email)
@@ -27,5 +22,9 @@ class LoginAuthenticationTest extends DuskTestCase
                 ->press('Login')
                 ->assertPathIs('/home');
         });
+
+       $user->delete();
     }
+
+
 }
