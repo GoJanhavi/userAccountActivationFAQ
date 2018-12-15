@@ -11,7 +11,7 @@
                     {!! Form::model($answer, ['route' => ['answer.update', $question, $answer], 'method' => 'patch']) !!}
                 @endif
                 <div class="card">
-                    <div class="card-header">New Question</div>
+                    <div class="card-header">New Answer</div>
 
                     <div class="card-body">
                         <div class="form-group">

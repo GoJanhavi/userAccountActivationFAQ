@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Question;
 use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\Integer;
 
 class QuestionController extends Controller
 {
@@ -80,9 +82,10 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-        $edit = TRUE;
-
-        return view('pages.breadOperation.questionForm',['question'=>$question,'edit'=>$edit]);
+        if ((int)($question->user_id) == Auth::user()->id) {
+            $edit = TRUE;
+            return view('pages.breadOperation.questionForm', ['question' => $question, 'edit' => $edit]);
+        }
     }
 
     /**

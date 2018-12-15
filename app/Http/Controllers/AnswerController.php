@@ -82,8 +82,10 @@ class AnswerController extends Controller
     public function edit($question, $answer)
     {
         $answer = Answer::find($answer); //gets answer object
-        $edit = TRUE;
-        return view('pages.breadOperation.answerForm',['answer'=> $answer,'question'=>$question,'edit'=>$edit]);
+        if ((int)($answer->user_id) == Auth::user()->id) {
+            $edit = TRUE;
+            return view('pages.breadOperation.answerForm', ['answer' => $answer, 'question' => $question, 'edit' => $edit]);
+        }
     }
 
     /**
