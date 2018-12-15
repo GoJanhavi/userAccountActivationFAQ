@@ -4,6 +4,7 @@ namespace Tests\Browser;
 
 use App\User;
 use Tests\DuskTestCase;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -24,6 +25,29 @@ class LoginAuthenticationTest extends DuskTestCase
         });
 
        $user->delete();
+    }
+
+    public function testUserVerification(){
+
+
+        $this->browse(function ($browser)  {
+            $browser->visit('/register')
+                ->type('email', 'gk.janvi009@gmail.com')
+                ->type('password', 'secret')
+                ->type('password_confirmation', 'secret')
+                ->press('Register');
+
+        });
+
+        $user= User::where('email','gk.janvi009@gmail.com')->first();
+
+        $this->browse(function ($browser)  use($user){
+            $userToken= $user->user_activation_token;
+            $browser->visit(url('user/verify', $userToken))
+                ->assertPathIs('/login');
+        });
+
+        $user->delete();
     }
 
 
