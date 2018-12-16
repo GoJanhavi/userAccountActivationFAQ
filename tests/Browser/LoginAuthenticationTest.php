@@ -15,14 +15,14 @@ class LoginAuthenticationTest extends DuskTestCase
 
         $this->browse(function ($browser)  {
             $browser->visit('/register')
-                ->type('email', 'testUserVerify@test.com')
+                ->type('email', 'gk.janvi009@gmail.com')
                 ->type('password', 'secret')
                 ->type('password_confirmation', 'secret')
                 ->press('Register');
 
         });
 
-        $user= User::where('email','testUserVerify@test.com')->first();
+        $user= User::where('email','gk.janvi009@gmail.com')->first();
 
         $this->browse(function ($browser)  use($user){
             $userToken= $user->user_activation_token;

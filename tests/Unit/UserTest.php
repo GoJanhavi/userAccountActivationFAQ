@@ -73,6 +73,8 @@ class UserTest extends TestCase
     public function testTokenFormat(){
         $token = User::inRandomOrder()->first()->user_activation_token;
         $this->assertInternalType('string', $token);
+
+        $this->artisan('migrate:refresh');
     }
 
 }

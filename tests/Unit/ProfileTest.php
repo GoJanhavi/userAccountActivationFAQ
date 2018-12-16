@@ -20,5 +20,6 @@ class ProfileTest extends TestCase
         $profile = factory(\App\Profile::class)->make();
         $profile->user()->associate($user);
         $this->assertTrue($profile->save());
+        $this->artisan('migrate:refresh');
     }
 }

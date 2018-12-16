@@ -24,5 +24,6 @@ class AnswerTest extends TestCase
         $answer->user()->associate($user);
         $answer->question()->associate($question);
         $this->assertTrue($answer->save());
+        $this->artisan('migrate:refresh');
     }
 }
