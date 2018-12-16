@@ -20,6 +20,5 @@ class QuestionTest extends TestCase
         $question = factory(\App\Question::class)->make();
         $question->user()->associate($user);
         $this->assertTrue($question->save());
-        $this->artisan('migrate:refresh');
     }
 }
