@@ -72,4 +72,35 @@ class AnswerTest extends DuskTestCase
         $question->delete();
         $user->delete();
     }
+
+    public function testDeleteAnswer(){
+        $user = factory(User::class)->make([
+            'email' => 'testEditAnswer@abc.com',
+        ]);
+        $user->save();
+        $this->browse(function ($browser) use ($user) {
+            $browser->visit('/login')
+                ->type('email', $user->email)
+                ->type('password', 'secret')
+                ->press('Login')
+                ->assertPathIs('/home')
+                ->clickLink('Post New')
+                ->assertPathIs('/question/create')
+                ->type('body', 'Question to be answered')
+                ->press('Post')
+                ->assertPathIs('/home')
+                ->clickLink('View')
+                ->clickLink('Post New')
+                ->type('body', 'Answer to be deleted')
+                ->press('Post')
+                ->clickLink('View')
+                ->press('Delete')
+                ->assertSee("Answer deleted successfully");
+        });
+
+        Question::where('user_id',($user->id))->first()->delete();
+        $user->delete();
+    }
+
+
 }
