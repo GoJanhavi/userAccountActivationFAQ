@@ -25,7 +25,7 @@
 ##
 
 ####**Epic 3: Testing with Dusk**
-> Install Dusk by following the instructions on laravel dusk documentation website and run the "php artisan dusk" command in order to run the laravel dusk tests. 
+> Install Dusk by following the instructions on laravel dusk documentation website and run the "php artisan dusk" command in order to execute laravel dusk tests. 
 1. Generate a new test file using dusk commands.
 2. Test System Environment should be able to perform User Registration test along with mail verification to create an active verified account.
 3. Test System Environment should be able to login with existing user details.
@@ -34,6 +34,6 @@
 6. Test System Environment should be able to perform CRUD operation on Answers.
 >Note: update localhost in ".env" file with your local host server address, e.g. http://localhost:8000/
 
->P.S.: Local server should be up and running to run dusk test.
+>P.S.: Local server should be up and running to execute dusk test cases.
 
 ##
