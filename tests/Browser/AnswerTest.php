@@ -2,22 +2,41 @@
 
 namespace Tests\Browser;
 
+use App\Answer;
+use App\Question;
+use App\User;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class AnswerTest extends DuskTestCase
 {
-    /**
-     * A Dusk test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/')
-                    ->assertSee('Laravel');
+    public function testAddAnswerToQuestion(){
+        $user = factory(User::class)->make([
+            'email' => 'testAddAnswer@abc.com',
+        ]);
+        $user->save();
+        $this->browse(function ($browser) use ($user) {
+            $browser->visit('/login')
+                ->type('email', $user->email)
+                ->type('password', 'secret')
+                ->press('Login')
+                ->assertPathIs('/home')
+                ->clickLink('Post New')
+                ->assertPathIs('/question/create')
+                ->type('body', 'Question to be answered')
+                ->press('Post')
+                ->assertPathIs('/home')
+                ->clickLink('View')
+                ->clickLink('Post New')
+                ->type('body', 'Answer Added')
+                ->press('Post')
+                ->assertSee("Question answered successfully !!");
         });
+
+        $question = Question::where('user_id',($user->id))->first();
+        Answer::where('question_id',($question->id))->delete();
+        $question->delete();
+        $user->delete();
     }
 }
