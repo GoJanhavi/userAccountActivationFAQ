@@ -45,4 +45,5 @@
 ###Heroku Link: 
 https://finalprojectjanhavi.herokuapp.com/ 
 
-##
+### Test Screenshot
+Image path: TestScreenshot >> duskAndPhpunitTestScreenshot.png
